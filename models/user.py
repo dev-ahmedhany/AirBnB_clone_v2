@@ -9,7 +9,7 @@ from sqlalchemy.orm import relationship
 
 
 class User(BaseModel, Base):
-    """This class defines a user by various attributes"""
+    """class User"""
     
     __tablename__ = "users"
     
@@ -21,5 +21,5 @@ class User(BaseModel, Base):
     reviews = relationship("Review", backref="user", cascade="delete")
 
     def __init__(self, *args, **kwargs):
-        """ """
+        """ init user """
         super().__init__(*args, **kwargs)

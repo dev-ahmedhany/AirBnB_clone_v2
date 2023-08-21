@@ -12,7 +12,7 @@ from models.amenity import Amenity
 from models.review import Review
 
 
-table = Table("place_amenity", Base.metadata,
+association_table = Table("place_amenity", Base.metadata,
                           Column("place_id", String(60),
                                  ForeignKey("places.id"),
                                  primary_key=True, nullable=False),
@@ -23,7 +23,9 @@ table = Table("place_amenity", Base.metadata,
 
 class Place(BaseModel, Base):
     """ A place to stay """
+    
     __tablename__ = 'places'
+    
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     name = Column(String(128), nullable=False)
@@ -40,7 +42,7 @@ class Place(BaseModel, Base):
     amenity_ids = []
 
     def __init__(self, *args, **kwargs):
-        """initializes Place"""
+        """ init Place """
         super().__init__(*args, **kwargs)
 
     if models.storage_type != "db":
@@ -55,7 +57,7 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            """ Get Linked Amenities"""
+            """ Get Amenities"""
             amenitylist = []
             for amenity in list(models.storage.all(Amenity).values()):
                 if amenity.id in self.amenity_ids:

@@ -10,20 +10,20 @@ from sqlalchemy.orm import relationship
 
 class State(BaseModel, Base):
     """ State class """
+    
     __tablename__ = "states"
+    
     name = Column(String(128), nullable=False)
     cities = relationship("City", backref="state")
 
     def __init__(self, *args, **kwargs):
-        """ """
+        """ init state """
         super().__init__(*args, **kwargs)
 
     if models.storage_type != "db":
         @property
         def cities(self):
-            """ 
-            return list of city equal to state id
-            """
+            """ list cities """
             list_city = []
             all_inst_c = models.storage.all(City)
             for value in all_inst_c.values():

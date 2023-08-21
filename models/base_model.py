@@ -11,6 +11,7 @@ Base = declarative_base()
 
 class BaseModel:
     """A base class for all hbnb models"""
+    
     id = Column(String(60), primary_key=True, nullable=False)
     created_at = Column(DateTime,
                         default=datetime.utcnow(),
@@ -22,11 +23,11 @@ class BaseModel:
                         )
 
     def __init__(self, *args, **kwargs):
-        """ """
+        """ init BaseModel """
         self.id = str(uuid4())
         self.created_at = datetime.utcnow()
         self.updated_at = self.created_at
-
+        # each new instance created is added to the storage variable __objects
         if kwargs:
             for key, val in kwargs.items():
                 if key in ("created_at", "updated_at"):
@@ -36,21 +37,21 @@ class BaseModel:
                     setattr(self, key, val)
 
     def __str__(self):
-        """ """
-        dictt = self.to_dict()
+        """ prints instance """
+        dict = self.to_dict()
         cls = str(type(self)).split('.')[-1].split('\'')[0]
         return "[{:s}] ({:s}) {}".format(cls, self.id,
-                                         dictt)
+                                         dict)
 
     def save(self):
-        """  """
+        """update: update_at"""
         self.updated_at = datetime.utcnow()
         # only when we save the instance, its writen into the json file
         models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
-        """returns a dictionary containing all keys/values of the instance"""
+        """returns a dictionary of keys/values of the instance"""
         dictionary = {}
         dictionary.update(self.__dict__)
         try:
@@ -65,5 +66,5 @@ class BaseModel:
         return dictionary
 
     def delete(self):
-        """ """
+        """ deletes object from storage """
         models.storage.delete(self)

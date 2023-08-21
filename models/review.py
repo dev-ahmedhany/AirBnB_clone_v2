@@ -10,7 +10,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 
 class Review(BaseModel, Base):
-    """ Review classto store review information """
+    """ Review class """
     
     __tablename__ = "reviews"
     
@@ -19,5 +19,5 @@ class Review(BaseModel, Base):
     text = Column(String(1024), nullable=False)
 
     def __init__(self, *args, **kwargs):
-        """ """
+        """ init review """
         super().__init__(*args, **kwargs)
