@@ -13,6 +13,7 @@ def hello():
 def hbnb():
     return 'HBNB'
 
+
 @app.route('/c/<text>')
 def c_is_fun(text):
     return 'C ' + text.replace('_', ' ')
